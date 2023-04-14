@@ -22,6 +22,17 @@ public abstract class Wizard extends BaseHero implements GameInterface{
             }
         }
     }
+    @Override
+    public String toString() {
+        return name +
+                " \uD83D\uDC97: " + Math.round(hp) +
+                " \uD83D\uDEE1️: " + defense +
+                " A:" + attack +
+                " Dmg:" + Math.round(Math.abs((damageMin+damageMax)/2)) +
+                "\uD83D\uDD31 " + mana + " " +
+                "\uD83D\uDCAA"+speed+" "+
+                state;
+    }
 
 
 }

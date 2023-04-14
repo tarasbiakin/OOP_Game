@@ -22,4 +22,14 @@ public class Peasant extends BaseHero{
                 .append(" \t| Arrows: ").append(Peasant.this.cartridges)
                 .append("\t|").append("\t| (X.Y) : ").append(Peasant.super.coords.posX).append(".").append(Peasant.super.coords.posY);
     }
+    @Override
+    public String toString() {
+        return name +
+                " \uD83D\uDC97: " + Math.round(hp) +
+                " \uD83D\uDEE1️: " + defense +
+                " A:" + attack +
+                " Dmg:" + Math.round(Math.abs((damageMin+damageMax)/2)) +
+                "\uD83D\uDCAA"+speed+" "+
+                state;
+    }
 }

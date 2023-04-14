@@ -2,7 +2,7 @@ package org.example.units;
 
 import java.util.ArrayList;
 
-public abstract class Shooter extends BaseHero {
+public abstract class Shooter extends Warrior {
     protected int range;
     protected int ammo;
 
@@ -32,11 +32,12 @@ public abstract class Shooter extends BaseHero {
     @Override
     public String toString() {
         return name +
-                " H:" + Math.round(hp) +
-                " D:" + defense +
+                " \uD83D\uDC97: " + Math.round(hp) +
+                " \uD83D\uDEE1️: " + defense +
                 " A:" + attack +
                 " Dmg:" + Math.round(Math.abs((damageMin+damageMax)/2)) +
                 " Shots:" + ammo + " " +
+                "\uD83D\uDCAA"+speed+" "+
                 state;
     }
 

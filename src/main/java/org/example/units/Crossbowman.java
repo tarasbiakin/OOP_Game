@@ -15,4 +15,15 @@ public class Crossbowman extends Shooter{
                 .append(" \t| Arrows:").append(Crossbowman.super.ammo)
                 .append("\t|").append("\t| (X.Y) : ").append(Crossbowman.super.coords.posX).append(".").append(Crossbowman.super.coords.posY);
     }
+    @Override
+    public String toString() {
+        return name +
+                " \uD83D\uDC97: " + Math.round(hp) +
+                " \uD83D\uDEE1️: " + defense +
+                " A:" + attack +
+                " Dmg:" + Math.round(Math.abs((damageMin+damageMax)/2)) +
+                "➴" + ammo + " " +
+                "\uD83D\uDCAA"+speed+" "+
+                state;
+    }
 }

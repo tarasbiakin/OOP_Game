@@ -14,6 +14,17 @@ public class Sniper extends Shooter{
                 .append(" \t| Arrows:").append(Sniper.super.ammo)
                 .append("\t|").append("\t| (X.Y) : ").append(Sniper.super.coords.posX).append(".").append(Sniper.super.coords.posY);
     }
+    @Override
+    public String toString() {
+        return name +
+                " \uD83D\uDC97: " + Math.round(hp) +
+                " \uD83D\uDEE1️: " + defense +
+                " A:" + attack +
+                " Dmg:" + Math.round(Math.abs((damageMin+damageMax)/2)) +
+                " Shots:" + ammo + " " +
+                "\uD83D\uDCAA"+speed+" "+
+                state;
+    }
 
 
 }

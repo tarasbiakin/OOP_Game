@@ -4,9 +4,9 @@ import java.util.Comparator;
 
 public interface GameInterface {
 
-    String  getInfo ();
+    StringBuilder  getInfo ();
 
-    void step(ArrayList <BaseHero> enemys, ArrayList <BaseHero> friends);
+    void step(ArrayList<BaseHero> team1, ArrayList<BaseHero> team2);
 
 
 }

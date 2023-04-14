@@ -3,24 +3,23 @@ package org.example.units;
 import java.util.ArrayList;
 
 public class Peasant extends BaseHero{
-        int portable_stock;
-    public Peasant(String name,int x,int y) {
-        super(100, name , x,y, 0, new int[]{1,2},"гражданский","серп",2);
-
-        portable_stock = 70;
-
+    protected int cartridges;
+    public Peasant(Vector2D coords){
+        super(50.f,50,1,1,2,1,3,coords.posX,coords.posY);
+    }
+    @Override
+    public void step(ArrayList<BaseHero> team1, ArrayList<BaseHero> team2) {
+        if (!state.equals("Die")) state = "Stand";
     }
 
 
     @Override
-    public String getInfo() {
-        String className = this.getClass().getSimpleName();
-        String nameOfHero = name;
-        return className+" "+nameOfHero;
-    }
-
-    @Override
-    public void step(ArrayList <BaseHero> enemys, ArrayList <BaseHero> friends) {
-
+    public StringBuilder getInfo() {
+        StringBuilder builder = new StringBuilder();
+        return builder.append("фермер/Крестьянин: \t").append(Peasant.super.name)
+                .append("\t| ATK:\t").append(Peasant.super.attack)
+                .append("\t| HP:\t").append(Peasant.super.hp)
+                .append(" \t| Arrows: ").append(Peasant.this.cartridges)
+                .append("\t|").append("\t| (X.Y) : ").append(Peasant.super.coords.posX).append(".").append(Peasant.super.coords.posY);
     }
 }

@@ -3,24 +3,16 @@ package org.example.units;
 import java.util.ArrayList;
 
 public class Crossbowman extends Shooter{
-
-    public Crossbowman(String name,int x,int y) {
-        super(180, name , x, y, 38, new int[]{1,12},"воин","арбалет",10,75,10);
-
+    public Crossbowman(Vector2D coords){
+        super(70.f,70,6,4,7,4,9,21,10,coords.posX,coords.posY);
     }
-
-
-
-
     @Override
-    public String getInfo() {
-        String className = this.getClass().getSimpleName();
-        String nameOfHero = name;
-        return className+" "+nameOfHero;
-    }
-
-    @Override
-    public void step(ArrayList<BaseHero> enemys, ArrayList<BaseHero> friends) {
-
+    public StringBuilder getInfo() {
+        StringBuilder builder = new StringBuilder();
+        return builder.append("Арбалет: \t").append(Crossbowman.super.name)
+                .append("\t| ATK:\t").append(Crossbowman.super.attack)
+                .append("\t| HP:\t").append(Crossbowman.super.hp)
+                .append(" \t| Arrows:").append(Crossbowman.super.ammo)
+                .append("\t|").append("\t| (X.Y) : ").append(Crossbowman.super.coords.posX).append(".").append(Crossbowman.super.coords.posY);
     }
 }

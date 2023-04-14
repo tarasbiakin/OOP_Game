@@ -1,22 +1,20 @@
 package org.example.units;
 
-import java.util.ArrayList;
 
-public class Archer extends BaseHero {
-    int arrows;
-    int accuracy;
-    public Archer(String name,int x,int y) {
-        super(150, name ,x,y, 6,  new int[]{1,10},"воин","лук",10);
-        arrows = 20;
-        accuracy = 90;
-
+public class Archer extends Shooter {
+    public Archer(Vector2D coords){
+        super(60.f,60,8,4,6,4,9,20,10,coords.posX,coords.posY);
     }
 
-
     @Override
-    public String getInfo() {
-        String className = this.getClass().getSimpleName();
-        String nameOfHero = name;
-        return className+" "+nameOfHero;
+    public StringBuilder getInfo() {
+        StringBuilder builder = new StringBuilder();
+        return builder.append("Лук: \t").append(Archer.super.name)
+                .append("\t| ATK:\t").append(Archer.super.attack)
+                .append("\t| HP:\t").append(Archer.super.hp)
+                .append(" \t| Arrows:").append(Archer.super.ammo)
+                .append("\t|").append("\t| (X.Y) : ").append(Archer.super.coords.posX).append(".").append(Archer.super.coords.posY);
+
+
     }
 }

@@ -1,32 +1,19 @@
 package org.example.units;
 
-import java.util.ArrayList;
-
 public class Sniper extends Shooter{
-
-    public Sniper(String name,int x,int y) {
-        super(120, name , x, y, 22, new int[]{1,8},"воин","лук",12,70,10);
-
-
-    }
-
-
-
-    @Override
-    public String getInfo() {
-        String className = this.getClass().getSimpleName();
-        String nameOfHero = name;
-        return className+" "+nameOfHero;
+    public Sniper(Vector2D coords){
+        super(60.f,60,10,2,5,4,10,22,12,coords.posX,coords.posY);
     }
 
     @Override
-    public void step(ArrayList<BaseHero> enemys, ArrayList<BaseHero> friends) {
-
+    public StringBuilder getInfo() {
+        StringBuilder builder = new StringBuilder();
+        return builder.append("Снайпер:\t").append(Sniper.super.name)
+                .append("\t| ATK:\t").append(Sniper.super.attack)
+                .append("\t| HP:\t").append(Sniper.super.hp)
+                .append(" \t| Arrows:").append(Sniper.super.ammo)
+                .append("\t|").append("\t| (X.Y) : ").append(Sniper.super.coords.posX).append(".").append(Sniper.super.coords.posY);
     }
 
-//    @Override
-//    public String toString() {
-//        String s = super.toString();
-//        return s;
-//    }
+
 }

@@ -1,27 +1,18 @@
 package org.example.units;
 
-import java.util.ArrayList;
 
-public class Spearman extends BaseHero {
-    int accuracy;
 
-    public Spearman(String name,int x,int y) {
-        super(100, name ,  x,y, 33, new int[]{2,12},"воин","копье",8);
-        accuracy = 100;
-
+public class Spearman extends Warrior{
+    public Spearman(Vector2D coords){
+        super(70.f,70,10,2,5,14,5,coords.posX,coords.posY);
     }
-
-
-
     @Override
-    public String getInfo() {
-        String className = this.getClass().getSimpleName();
-        String nameOfHero = name;
-        return className+" "+nameOfHero;
+    public StringBuilder getInfo() {
+        StringBuilder builder = new StringBuilder();
+        return builder.append("Копейщик:\t").append(Spearman.super.name)
+                .append("\t| ATK:\t").append(Spearman.super.attack)
+                .append("\t| HP:\t").append(Spearman.super.hp)
+                .append(" \t|\t\t\t|").append("\t| (X.Y) : ").append(Spearman.super.coords.posX).append(".").append(Spearman.super.coords.posY);
     }
 
-    @Override
-    public void step(ArrayList <BaseHero> enemys, ArrayList <BaseHero> friends) {
-
-    }
 }

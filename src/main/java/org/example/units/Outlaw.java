@@ -1,29 +1,18 @@
 package org.example.units;
 
-import java.util.ArrayList;
+public class Outlaw extends Warrior{
+    int disguise;
+    public Outlaw(Vector2D coords){
+        super(70.f,70,10,2,5,14,5,coords.posX,coords.posY);
 
-public class Outlaw extends BaseHero{
-    int knives;
-    int accuracy;
-
-    public Outlaw(String name,int x,int y) {
-        super(120, name , x, y, 42, new int[]{2,8},"гражданский","нож",8);
-        knives =40;
-        accuracy = 50;
-
+    this.disguise = 50;
     }
-
-
-
     @Override
-    public void step(ArrayList <BaseHero> enemys, ArrayList <BaseHero> friends) {
-
-    }
-
-    @Override
-    public String getInfo() {
-        String className = this.getClass().getSimpleName();
-        String nameOfHero = name;
-        return className+" "+nameOfHero;
+    public StringBuilder getInfo() {
+        StringBuilder builder = new StringBuilder();
+        return builder.append("Вор: \t").append(Outlaw.super.name)
+                .append("\t| ATK:\t").append(Outlaw.super.attack)
+                .append("\t| HP:\t").append(Outlaw.super.hp)
+                .append(" \t|\t\t\t|").append("\t| (X.Y) : ").append(Outlaw.super.coords.posX).append(".").append(Outlaw.super.coords.posY);
     }
 }

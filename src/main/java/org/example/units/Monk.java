@@ -1,23 +1,18 @@
 package org.example.units;
 
-import java.util.ArrayList;
-
 public class Monk extends Wizard {
-
-    public Monk(String name) {
-        super(120, name , 2, 3, 8, new int[]{2,20},"воин","книга заклинаний",20,4,2,8);
-
+    public Monk(Vector2D coords){
+        super(45.f,45,10,-7,-7,3,7,5,5,coords.posX,coords.posY);
     }
 
     @Override
-    public void step(ArrayList <BaseHero> enemys, ArrayList <BaseHero> friends) {
-
+    public StringBuilder getInfo() {
+        StringBuilder builder = new StringBuilder();
+        return builder.append("Монах:  \t").append(Monk.super.name)
+                .append("\t| ATK:\t").append(Monk.super.attack)
+                .append("\t| HP:\t").append(Monk.super.hp)
+                .append(" \t| MP:\t").append(Monk.super.mana)
+                .append("\t|").append("\t| (X.Y) : ").append(Monk.super.coords.posX).append(".").append(Monk.super.coords.posY);
     }
 
-    @Override
-    public String getInfo() {
-        String className = this.getClass().getSimpleName();
-        String nameOfHero = name;
-        return className+" "+nameOfHero;
-    }
 }

@@ -1,47 +1,43 @@
 package org.example.units;
-import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.ArrayList;
-import java.util.Random;
-public abstract class Shooter  extends BaseHero{
 
-    int arrows;
-    int accuracy;
-    public Shooter(float hp, String name,int x,int y, int armor, int[] damage, String clas_name, String weapon,int arrows,int accuracy,int initiative) {
-        super(hp, name, x,y, armor, damage, clas_name, weapon,initiative);
+public abstract class Shooter extends BaseHero {
+    protected int range;
+    protected int ammo;
 
-        this.arrows = arrows;
-       this.accuracy  = accuracy;
-    }
-    public void step(ArrayList<BaseHero> enemies, ArrayList <BaseHero> friends) {
-        if (!ifAlive() || !ifArrows()) return;
-        shoot(nearest(enemies));
-
-        if (!ifPeasant(friends)) arrows -=1;
-
-    }
-    public Boolean ifArrows() {
-        return arrows > 0;
+    protected Shooter(float hp, int maxHp, int attack, int damageMin,
+                      int damageMax, int defense, int speed, int ammo,
+                      int range, int posX, int posY) {
+        super(hp, maxHp, attack, damageMin, damageMax, defense, speed, posX, posY);
+        this.range = range;
+        this.ammo = ammo;
     }
 
-    public void shoot(BaseHero enemy){
-        int randomNum = ThreadLocalRandom.current().nextInt(damage[0], damage[1] + 1);
-        enemy.getDamage(randomNum);
-    }
-
-    public boolean ifPeasant(ArrayList <BaseHero> friends) {
-
-        for (int i = 0; i < friends.size(); i++) {
-            if (friends.get(i).getInfo().equals("Я крестьянин!") && (friends.get(i).state.equals("stand"))){
-                friends.get(i).state = "busy";
-                return true;
+    @Override
+    public void step(ArrayList<BaseHero> team1, ArrayList<BaseHero> team2) {
+        if (state.equals("Die") || ammo == 0) return;
+        BaseHero victim = team2.get(findNearest(team2));
+        float damage = (victim.defense - attack)>0 ? damageMin : (victim.defense - attack)<0 ? damageMax : (damageMin+damageMax)/2;
+        victim.getDamage((int) damage);
+        for (BaseHero human: team1) {
+            if (human.getInfo().toString().split(":")[0].equals("Фермер") && human.state.equals("Stand")) {
+                human.state = "Busy";
+                return;
             }
         }
-        return false;
+        ammo--;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return name +
+                " H:" + Math.round(hp) +
+                " D:" + defense +
+                " A:" + attack +
+                " Dmg:" + Math.round(Math.abs((damageMin+damageMax)/2)) +
+                " Shots:" + ammo + " " +
+                state;
+    }
 
 }

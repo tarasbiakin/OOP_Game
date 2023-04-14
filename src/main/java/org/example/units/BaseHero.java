@@ -3,80 +3,77 @@ package org.example.units;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class BaseHero implements GameInterface{
+public abstract class BaseHero implements GameInterface {
+    protected String name;
     protected float hp;
-    protected float maxHp;
-    public String name;
-    protected int x,y;
-    protected int armor;
-    protected int def;
-    protected int[] damage;
-    protected String clas_name;
-
-    protected String weapon;
-    protected int initiative;
-    protected static Random r;
-    protected Position position;
+    protected int maxHp;
+    protected int attack;
+    protected int damageMin;
+    protected int damageMax;
+    protected int defense;
+    protected int speed;
+    protected Vector2D coords;
     protected String state;
-
-
-    public BaseHero(float hp, String name, int x,int y, int armor, int[] damage,String clas_name,String weapon,int initiative){
-        this.hp = this.maxHp= hp;
-        this.name = name;
-        this.x =x;
-        this.y =y;
-        this.armor = armor;
-        this.def = def;
-        this.damage = damage;
-        this.clas_name=clas_name;
-        this.weapon = weapon;
-        this.initiative = initiative;
-        position = new Position(x, y);
-        this.state = "stand";
-
-    }
+    protected static int heroCnt;
 
     @Override
-    public void step(ArrayList<BaseHero> enemys, ArrayList <BaseHero> friends) {
-
-    }
-    public Boolean ifAlive (){
-        return hp > 0;}
-
-    public BaseHero nearest (ArrayList<BaseHero> otherHeroes) {
-        float min = 10;
-        BaseHero nearestHero = null;
-        for (int i = 0; i < otherHeroes.size(); i++) {
-            if (this.position.distance(otherHeroes.get(i)) < min); nearestHero = otherHeroes.get(i);
-
-        }
-        return nearestHero;
+    public String toString() {
+        return name +
+                " H:" + Math.round(hp) +
+                " D:" + defense +
+                " A:" + attack +
+                " Dmg:" + Math.round(Math.abs((damageMin+damageMax)/2)) +
+                " " + state;
     }
 
-    public void getDamage(int damage){
-        if(this.hp-damage>0){
-            this.hp=hp-damage;
-        }
+    public int[] getCoords() {return new int[]{coords.posX, coords.posY};}
 
+    protected BaseHero(float hp, int maxHp, int attack, int damageMin,
+                    int damageMax, int defense, int speed, int posX, int posY) {
+        this.name = getName();
+        this.hp = hp;
+        this.maxHp = maxHp;
+        this.attack = attack;
+        this.damageMin = damageMin;
+        this.damageMax = damageMax;
+        this.defense = defense;
+        this.speed = speed;
+        coords = new Vector2D(posX, posY);
+        state = "Stand";
+        heroCnt++;
     }
-    public void die(){}
 
-
-    public int getInit (){
-        return initiative;
-    }
-
-    public float getHp() {
-        return hp;
-    }
-
+    public int getSpeed() { return speed;}
+    public float getHp() { return hp;}
     @Override
-    public String toString(){
-        return name+" "+ hp+""+" "+armor+" "+ clas_name;
+    public void step(ArrayList<BaseHero> team1, ArrayList<BaseHero> team2) {}
+    public int findNearest(ArrayList<BaseHero> team){
+        int index = 0;
+        double min = Double.MAX_VALUE;
+        for (int i = 0; i < team.size(); i++) {
+            if(min > coords.getDistance(team.get(i).coords) && !team.get(i).state.equals("Die")) {
+                index = i;
+                min = coords.getDistance(team.get(i).coords);
+            }
+        }
+        return index;
     }
 
-    public String getPosition(){
-        return "  x:" +this.x +" y:" + this.y;
+    protected void getDamage(float damage){
+        this.hp -= damage;
+        if (hp <= 0) {
+            hp = 0;
+            state = "Die";
+        }
+        if (hp > maxHp) hp = maxHp;
+    }
+    @Override
+    public StringBuilder getInfo() {
+        return new StringBuilder("");
+    }
+
+    protected String getName(){
+        return Names.values()[new Random().nextInt(Names.values().length)].toString();
     }
 
 }

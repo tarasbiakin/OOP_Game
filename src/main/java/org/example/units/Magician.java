@@ -1,26 +1,19 @@
 package org.example.units;
 
-
-import java.util.ArrayList;
-
 public class Magician extends Wizard {
-
-
-    public Magician(String name,int x,int y) {
-        super(150, name , x, y, 12, new int[]{2,30},"воин","лук",22,12,5,8);
-
+    public Magician(Vector2D coords){
+        super(50.f,50,10,-7,-7,3,7,5,5,coords.posX,coords.posY);
     }
 
     @Override
-    public String getInfo() {
-        String className = this.getClass().getSimpleName();
-        String nameOfHero = name;
-        return className+" "+nameOfHero;
-    }
-
-    @Override
-    public void step(ArrayList <BaseHero> enemys, ArrayList <BaseHero> friends) {
-
+    public StringBuilder getInfo() {
+        StringBuilder builder = new StringBuilder();
+        return builder.append("Маг:  \t").append(Magician.super.name)
+                .append("\t| ATK:\t").append(Magician.super.attack)
+                .append("\t| HP:\t").append(Magician.super.hp)
+                .append(" \t| MP:\t").append(Magician.super.mana)
+                .append("\t|").append("\t| (X.Y) : ").append(Magician.super.coords.posX).append(".").append(Magician.super.coords.posY);
     }
 
 }
+

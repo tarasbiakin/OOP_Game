@@ -1,128 +1,76 @@
-package org.example.units;
+package org.example;
 
+import org.example.units.*;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Comparator;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
+    public static final int UNITS = 10;
+    public static ArrayList<BaseHero> darkTeam = new ArrayList<>();
+    public static ArrayList<BaseHero> holyTeam = new ArrayList<>();
+    public static ArrayList<BaseHero> allTeam = new ArrayList<>();
+
     public static void main(String[] args) {
-
-        ArrayList<BaseHero>heroes=team1();
-        ArrayList<BaseHero>heroes2=team2();
-
-    heroes2.forEach(n-> System.out.println(n.name+ n.getPosition()));
-        System.out.println("──▒▒▒▒▒────▒▒▒▒▒────▒▒▒▒▒────▄████▄─────\n" +
-                            "─▒▄─▒▄─▒──▒▄─▒▄─▒──▒▄─▒▄─▒──███▄█▀───────\n" +
-                            "─▒▒▒▒▒▒▒──▒▒▒▒▒▒▒──▒▒▒▒▒▒▒─▐████─────────\n" +
-                            "─▒▒▒▒▒▒▒──▒▒▒▒▒▒▒──▒▒▒▒▒▒▒──█████▄───────\n" +
-                            "─▒─▒─▒─▒──▒─▒─▒─▒──▒─▒─▒─▒───▀████▀─────");
-    heroes2.forEach(n-> System.out.println(n.name+ n.getPosition()));
-//        System.out.println(team1().get(0).findClosestEnemy(team2()));
-        ArrayList <BaseHero> unitedTeams = new ArrayList<>();
-        unitedTeams.addAll(heroes);
-        unitedTeams.addAll(heroes2);
-
-        cmp(unitedTeams);
-        for (BaseHero hero: unitedTeams) {
-            if(heroes.contains(hero)) hero.step(heroes2, heroes);
-            else hero.step(heroes, heroes2);
-
-        }
-
-        System.out.println(" Отсортированный список: ");
-        unitedTeams.forEach((n) -> System.out.println(n));
-        System.out.println("Первая команда: ");
-        heroes.forEach((n) -> System.out.println(n.name + " " + n.getHp()));
-        System.out.println("Вторая команда: ");
-        heroes2.forEach((n) -> System.out.println(n.name + " " + n.getHp()));
-
-
-
-
-}
-private static void cmp (ArrayList <BaseHero> heroes) {
-    heroes.sort((o1, o2) -> {
-        if (o1.getInit() - o2.getInit() == 0) {
-            return (int) (o1.getHp() - o2.getHp());
-        }
-
-        return o2.getInit() - o1.getInit();
-    });}
-private static String getName(){
-
-    return Names.values()[new Random().nextInt(Names.values().length)].toString();
-}
-    private static ArrayList<BaseHero> team1(){
-
-        int x =0;
-        int y =0;
-        ArrayList<BaseHero> team1 = new ArrayList<>();
-
-        for (int i =0;i<10;i++){
-            switch (new Random().nextInt(7)){
-                case 0:
-                    team1.add(new Archer(getName(),x,y+i));
-                    break;
-                case 1:
-                    team1.add(new Crossbowman(getName(),x,y+i));
-                    break;
-                case 2:
-                    team1.add(new Magician(getName(),x,y+i));
-                    break;
-                case 3:
-                    team1.add(new Outlaw(getName(),x,y+i));
-                    break;
-                case 4:
-                    team1.add(new Peasant(getName(),x,y+i));
-                    break;
-                case 5:
-                    team1.add(new Sniper(getName(),x,y+i));
-                    break;
-                case 6:
-                    team1.add(new Spearman(getName(),x,y+i));
-                    break;
-
+        init();
+        Scanner input = new Scanner(System.in);
+        while (true){
+            allTeam = sortTeam();
+            View.view();  // отображение в консоль
+            input.nextLine();
+            for (BaseHero human: allTeam) {
+                if (holyTeam.contains(human)) human.step(holyTeam, darkTeam);
+                else human.step(darkTeam, holyTeam);
             }
         }
-        return team1;
     }
 
-    private static ArrayList<BaseHero> team2(){
-        int x =9;
-        int y =0;
+    private static void init() {
+        for (int i = 0; i < UNITS; i++) {
+            int rnd = new Random().nextInt(7);
+            switch (rnd) {
+                case (0):
+                    darkTeam.add(new Sniper(new Vector2D(i+1, 1)));
+                    break;
+                case (1):
+                    darkTeam.add(new Outlaw(new Vector2D(i+1, 1)));
+                    break;
+                case (2):
+                    darkTeam.add(new Monk(new Vector2D(i+1, 1)));
+                    break;
+                default:
+                    darkTeam.add(new Peasant(new Vector2D(i+1, 1)));
+            }
 
-        ArrayList<BaseHero> team2 = new ArrayList<>();
-        for (int i =0;i<10;i++){
-            switch (new Random().nextInt(7)){
-                case 0:
-                    team2.add(new Archer(getName(),x,y+i));
+            rnd = new Random().nextInt(7);
+            switch (rnd) {
+                case (0):
+                    holyTeam.add(new Peasant(new Vector2D(i+1, 10)));
                     break;
-                case 1:
-                    team2.add(new Crossbowman(getName(),x,y+i));
+                case (1):
+                    holyTeam.add(new Crossbowman(new Vector2D(i+1, 10)));
                     break;
-                case 2:
-                    team2.add(new Magician(getName(),x,y+i));
+                case (2):
+                    holyTeam.add(new Magician(new Vector2D(i+1, 10)));
                     break;
-                case 3:
-                    team2.add(new Outlaw(getName(),x,y+i));
-                    break;
-                case 4:
-                    team2.add(new Peasant(getName(),x,y+i));
-                    break;
-                case 5:
-                    team2.add(new Sniper(getName(),x,y+i));
-                    break;
-                case 6:
-                    team2.add(new Spearman(getName(),x,y+i));
-                    break;
-
+                default:
+                    holyTeam.add(new Spearman(new Vector2D(i+1, 10)));
             }
         }
-        return team2;
     }
-
-
+    private static ArrayList<BaseHero> sortTeam (){
+        ArrayList<BaseHero> list = new ArrayList<>();
+        list.addAll(darkTeam);
+        list.addAll(holyTeam);
+        list.sort(new Comparator<BaseHero>() {
+            @Override
+            public int compare(BaseHero t0, BaseHero t1) {
+                if (t1.getSpeed() == t0.getSpeed()) return (int) (t1.getHp() - t0.getHp());
+                else  return (int) (t1.getSpeed() - t0.getSpeed());
+            }
+        });
+        return list;
+    }
 }
-
-
